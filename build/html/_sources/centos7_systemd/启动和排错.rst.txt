@@ -1,0 +1,70 @@
+=====================
+启动和排错
+=====================
+
+电源通过给主板给cpu供电，然后cpu读取主板上的只读存储器（rom）识别内存、显卡、硬盘等硬件
+ 
+破坏centos7前446字节及修复命令
+
+级别切换:     
+            init N ==> systemctl isolate name.target 
+            systemctl isolate multi-user.target 
+
+注:只有/lib/systemd/system/\*.target文件中AllowIsolate=yes才能切换(修改文件需执行systemctl daemon-reload才能生效)
+
+调整默认启动内核 
+vim /etc/default/grub 
+GRUB_DEFAULT=0   （对应grub.cfg 文件第一个entry启动内核项）
+ 
+grub2-mkconfig  -o  /boot/grub2/grub.cfg
+ 
+删除编译安装的内核步骤：
+
+.. image:: ../images/img1.png
+
+rm   -f   /boot/*4.14*
+rm -rf /lib/modules/4.14.9-1.0.junlinux/
+ 
+生成grub.cfg文件
+
+.. image:: ../images/img2.png
+
+移除/boot目录下所有文件内容及恢复方法
+=====================================
+
+1.  .. image:: ../images/img3.png
+
+
+2.  光盘引导救援模式进入系统
+
+3.  .. image:: ../images/img4.png
+
+
+4.  .. image:: ../images/img5.png
+
+
+5.  .. image:: ../images/img6.png
+
+
+6.  .. image:: ../images/img7.png
+
+
+7.  .. image:: ../images/img8.png   
+
+
+    生成grub.cfg文件使用sync命令同步
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+
+

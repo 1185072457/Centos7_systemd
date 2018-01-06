@@ -1,0 +1,59 @@
+centos7 编写测试服务
+===============================
+
+bak.sh脚本内容：
+
+.. code-block:: bash
+
+    cp -a /etc/sysconfig /app/sysconfig-bak >> /dev/null
+
+bak脚本要加执行权限
+
+服务Unit文件示例::
+
+>   Unit
+>   Description=backup /etc
+>   Requires=atd.service
+>   [Service]
+>   Type=simple
+>   ExecStart=/bin/bash -c "echo /lib/systemd/system/bak.sh|at now"
+>   [Install]
+>   WantedBy=multi-user.target
+
+
+运行级别
+
+.. code-block:: bash
+
+    ls /usr/lib/systemd/system/*.target
+
+运行级别::
+
+>   0 ==> runlevel0.target, poweroff.target
+>   1 ==> runlevel1.target, rescue.target
+>   2 ==> runlevel2.target, multi-user.target
+>   3 ==> runlevel3.target, multi-user.target
+>   4 ==> runlevel4.target, multi-user.target
+>   5 ==> runlevel5.target, graphical.target
+>   6 ==> runlevel6.target, reboot.target
+    
+
+
+设置默认运行级别
+
+.. code-block:: bash
+
+    systemctl set-default multi-user.target
+
+
+等同于创建软链接：
+
+.. code-block:: bash
+
+    ln  -s  /usr/lib/systemd/system/multi-user.target   /etc/systemd/system/default.target
+
+删除软链接使用原来默认运行级别
+
+.. code-block:: bash
+
+    rm  -f   /etc/systemd/system/default.target

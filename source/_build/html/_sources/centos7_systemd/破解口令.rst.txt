@@ -1,0 +1,30 @@
+===============
+破解口令
+===============
+
+方法一：
+
+>   启动时任意键暂停启动 
+>   按e键进入编辑模式 
+>   将光标移动linux16开始的行，添加内核参数rd.break 
+>   按ctrl-x启动 
+>   mount –o remount,rw /sysroot 
+>   chroot /sysroot   
+>   passwd root    （更改密码破坏shadow文件标签）
+>   touch /.autorelabel   （考试环境因启动selinux，重启系统需要扫描磁盘给文件打标签）
+>   exit 
+>   reboot
+
+     
+
+方法二：
+
+>    启动时任意键暂停启动
+>    按e键进入编辑模式
+>    将光标移动linux16开始的行，改为rw init=/sysroot/bin/sh
+>    按ctrl-x启动
+>    chroot /sysroot
+>    passwd root
+>    touch /.autorelabel
+>    exit
+>    reboot
